@@ -4,14 +4,14 @@
 class Person {
 private:
 	char pName[30];//name
-	int pAge;//age
-	short behaRating;//1 to 10 how considerate
+	int pAge = 0;//age
+	short behaRating = 0;//1 to 10 how considerate
 	short combinedOpinion = 0;//rating comined between movie quality enviroment and "behaRating"
 
-	void calcolateCO(Movie m) 
+	/*void calcolateCO(Movie m) 
 	{
 	 
-	}
+	}*/
 
 public:
 
@@ -84,15 +84,17 @@ public:
 
 };
 
-class Movie
+class Movie 
 {
+	
 private:
-	char* movieName = new char[];//30
+	char movieName[30];//30
 	short ageAfter;
 	short movieRating;
 
 public:
-	Movie(){
+	Movie()
+	{
 	
 	}
 
@@ -135,6 +137,11 @@ public:
 
 	void printMovieData() 
 	{
+		std::cout << std::endl;
+
+		std::cout << movieName << std::endl;
+		std::cout << ageAfter << std::endl;
+		std::cout << movieRating << std::endl;
 
 	}
 
@@ -169,10 +176,118 @@ public:
 
 };
 
-class Room
+class Room {
+private:
+	int seatCount = 0;
+	bool isGoldenRoom = 0;
+	char* seats = new char[seatCount];
+
+	void buildSeats()
+	{
+		for (int i = 0; i < seatCount; ++i)
+		{
+			seats[i] = 'X';
+		}
+
+	}
+
+
+public:
+	Room() 
+	{
+	}
+
+	Room(int seatCount, bool isGoldenRoom)
+	{
+		this->isGoldenRoom = isGoldenRoom;
+		this->seatCount = seatCount;
+		buildSeats();
+	}
+
+
+
+	void priitRoomLayout() {
+
+
+		int counter = 0;
+		for (int i = 0; i < sqrt(seatCount); i++)
+		{
+			std::cout << '\t';
+			for (int a = 0; a < sqrt(seatCount); a++) {
+				counter++;
+				if (counter != seatCount + 1) {
+					std::cout << "x";
+				}
+				else { break; }
+
+			}
+			std::cout << '\n';
+		}
+	}
+
+
+	const int getSeatCount()
+	{
+		return seatCount;
+	}
+
+	void setSeatCount(int seatCount) 
+	{
+		this->seatCount = seatCount;
+	}
+
+	const bool getIsGoldenRoom()
+	{
+		return isGoldenRoom;
+	}
+
+	void setIsGoldenRoom(bool isGoldenRoom) 
+	{
+		this->isGoldenRoom = isGoldenRoom;
+	}
+};
+
+class Cinema
 {
 private:
-	short roomNum;
+	short roomNum = 0;//From 1 to 6
+
+    
+public:
+	
+
+
+	Cinema()
+	{
+	}
+
+	Cinema(short roomNum) 
+	{
+		this->roomNum = roomNum;
+	
+		
+
+	}
+
+	short getRoomNum() 
+	{
+		return roomNum;
+	}
+
+	void setRoomNum(const short roomNum) 
+	{
+		this->roomNum = roomNum;
+	}
+
+	
+
+	
+
+	/*void prezentRoomLayout() 
+	{
+
+	}*/
+
 };
 
 class CashDesk {
@@ -221,12 +336,73 @@ Person createPerson()
 
 }
 
+Movie createMovie()
+{
+	char arr[30];
+	short sub = 0;
+	
+	Movie movie;
+
+	std::cout << "Enter movie name: ";
+	std::cin.getline(arr, 30);
+	movie.setMovieName(arr);
+
+	std::cout << std::endl;
+
+	
+	do {
+		std::cout << "Enter age restriction (0),(13) or (17): ";
+		std::cin >> sub;
+	} while (sub != 0 && sub != 13 && sub != 17 );
+	movie.setAgeAfter(sub);
+
+	std::cout << '\n';
+
+	do
+	{
+		std::cout << "Enter movie rating rating from 1 to 10: ";
+		std::cin >> sub;
+		std::cout << std::endl;
+
+	} while (sub > 10 || sub < 1);
+	movie.setMovieRating(sub);
+
+	
+
+	return movie;
+	
+}
+
+Room createRoom() 
+{
+	Room *room = new Room;
+	std::cout << '\n';
+
+	std::cout << "Enter seat count: " ;
+	std::cin >> room.setSeatCount();
+
+	std::cout << '\n';
+
+	std::cout << "Is the room golden (true/false): ";
+	std::cin >> room.setIsGoldenRoom();
+
+	return room;
+}
+
+Cinema createCinema(Room room)
+{
+
+}
+
 int main() {
 	
 	//Person p1 = createPerson();
 	//p1.printPersonData();
 	
-	Movie m1;
-
+	//Movie m1 = createMovie();
+	//m1.printMovieData();
+	
+	//Room r = createRoom();
+	
 	return 0;
 }
